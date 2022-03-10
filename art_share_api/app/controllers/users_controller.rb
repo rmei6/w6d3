@@ -1,8 +1,12 @@
 # app/controllers/users_controller.rb
 class UsersController < ApplicationController
   def index
-    @users = User.all
-
+    # debugger
+    if params[:username]
+      @users = User.where('username LIKE ?', "%#{params[:username]}%")
+    else
+      @users = User.all
+    end
     render json: @users
   end
 

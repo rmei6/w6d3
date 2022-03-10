@@ -1,10 +1,15 @@
-class CommentController < ApplicationController
+class CommentsController < ApplicationController
   def index
-    #params[:id].class == 'User'
+    #debugger
+    #params["comment"]["user_id"]
     if params[:user_id]
-      render json: Comment.find_by_user_id(params[:user_id])
+      render json: Comment.where(user_id: params[:user_id])
     elsif params[:artwork_id]
-      render json: Comment.find_by_artwork_id(params[:artwork_id])
+      render json: Comment.where(artwork_id: params[:artwork_id])
+    elsif params[:id]
+      render json: Comment.where(id: params[:id])
+    else
+      render json: Comment.all
     end
    
   end
@@ -28,6 +33,6 @@ class CommentController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:user_id,:artwork_id)
+    params.require(:comment).permit(:user_id,:artwork_id,:body)
   end
 end
