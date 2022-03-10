@@ -8,14 +8,12 @@
 User.destroy_all
 Artwork.destroy_all
 ArtworkShare.destroy_all
-users = User.create!([{username: 'Dan123'},{username: 'Lukesky'},{username: 'Starnerd'},{username: 'Jimmyjohn'}])
-
-artworks = Artwork.create!([{title: "A", image_url: "a.com", artist_id: users[0].id},
-                            {title: 'B', image_url: 'b.com', artist_id: users[1].id},
-                            {title: 'C', image_url: 'c.com', artist_id: users[2].id},
-                            {title: 'D', image_url: 'd.com', artist_id: users[3].id}])
 
 
-artworkshares = ArtworkShare.create!([{viewer_id:users[0].id,artwork_id:artworks[0].id},
-{viewer_id:users[2].id,artwork_id:artworks[3].id}
-])
+
+user1 = User.create!(username: 'robert')
+user2 = User.create!(username: 'bill')
+artwork1 = Artwork.create!(title: 'nighthawks', image_url: 'google.com', artist_id: user1.id)
+artwork2 = Artwork.create!(title: 'mona lisa', image_url: 'google1.com', artist_id: user2.id)
+ArtworkShare.create!(artwork_id: artwork1.id, viewer_id: user2.id)
+ArtworkShare.create!(artwork_id: artwork2.id, viewer_id: user2.id)

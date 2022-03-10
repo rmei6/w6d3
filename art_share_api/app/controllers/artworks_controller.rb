@@ -1,16 +1,15 @@
 # app/controllers/artworks_controller.rb
 class ArtworksController < ApplicationController
   def index
-    @artworks = Artwork.all
-
-    render json: @artworks
+    render json: Artwork.artworks_for_user_id(params[:user_id])
+   
   end
 
   def create
     #debugger
     artwork = Artwork.new(artwork_params)
     if artwork.save
-      render json: artwork
+      render json: artwork, status: :created
     else
       render json: artwork.errors.full_messages, status: :unprocessable_entity
     end
@@ -37,7 +36,10 @@ class ArtworksController < ApplicationController
     redirect_to artworks_url
   end
 
+  private
+
   def artwork_params
     params.require(:artwork).permit(:title, :image_url, :artist_id)
   end
+
 end
